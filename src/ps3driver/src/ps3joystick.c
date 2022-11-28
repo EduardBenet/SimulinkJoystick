@@ -31,18 +31,6 @@ int read_event(int fd, struct js_event *event)
 }
 
 /**
- * Returns the number of buttons on the controller or 0 if an error occurs.
- */
-size_t get_button_count(int fd)
-{
-    __u8 buttons;
-    if (ioctl(fd, JSIOCGBUTTONS, &buttons) == -1)
-        return 0;
-
-    return buttons;
-}
-
-/**
  * Current state of an axis.
  */
 struct axis_state {
@@ -88,8 +76,6 @@ int joystickSetup()
     if (js == -1)
         perror("Could not open joystick");
 
-    //n_buttons = get_button_count(js);
-
 }
 
 void readJoystick(int fd, joystick_state *j_state ) {
@@ -97,9 +83,6 @@ void readJoystick(int fd, joystick_state *j_state ) {
     struct js_event event;
     struct axis_state axes[3] = {0};
     size_t axis;
-
-    //static struct jstate buttons[n_buttons] = {0};
-    //static int test;
 
     while (read_event(fd, &event) > 0) 
     {
@@ -109,11 +92,11 @@ void readJoystick(int fd, joystick_state *j_state ) {
                 j_state->buttons[event.number] = event.value;
                 break;
             case JS_EVENT_AXIS:
-                axis = get_axis_state(&event, axes);
-                j_state->axis[0] = axes[0].x;
-                j_state->axis[1] = -axes[0].y;
-                j_state->axis[2] = axes[2].x;
-                j_state->axis[3] = -axes[1].y;
+                if (event.number % 2 == 0) {
+                    j_state->axis[event.number] = event.value;
+                } else {
+                    j_state->axis[event.number] = -event.value;
+                }
                 break;
             default:
                 break;

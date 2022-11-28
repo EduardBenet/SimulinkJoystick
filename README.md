@@ -18,6 +18,6 @@ It should be quite straigtforward, but [this](./Joystick_setup/README.md) is wha
 
 ## Step 4: Create a device driver block
 
-We now need to create the controller for the joystic. For this, we are going to create a MATLAB System block. This is a Simulink Block that takes a C file with the actual code needed to control the Joystick.
-The code here is derived from [this GitHub repository](https://gist.github.com/jasonwhite/c5b2048c15993d285130) containing a better explanation on how to actually connect the remote. 
+We now need to create the controller for the joystic. For this, we are going to create a MATLAB System block. This is a Device driver Block that takes a C file with the actual code needed to control the Joystick. A good examplem on how to do that can be found [here](https://ch.mathworks.com/help/supportpkg/raspberrypi/ug/create-a-project-folder-digital-write-block.html)
+The C code here is derived from [this GitHub repository](https://gist.github.com/jasonwhite/c5b2048c15993d285130) containing a better explanation on how to actually connect the remote. 
 

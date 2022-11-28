@@ -5,7 +5,7 @@
 // Button state
 typedef struct {
     int buttons[17];
-    short axis[4];
+    short axis[6];
 } joystick_state;
 
 int joystickSetup();
